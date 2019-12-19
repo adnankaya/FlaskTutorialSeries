@@ -1,0 +1,24 @@
+{% extends 'bootstrap/base.html' %}
+    {% block navbar%}
+        {% include '_navbar.html' %}
+    {% endblock %}
+
+    <!-- Bootstrap kendisi icin kullanır: body,content -->
+    {% block content %}
+    <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{category}}" role="alert">
+                                {{message}}
+                            </div>
+                        {% endfor%}
+                {% endif %}
+            {% endwith %}
+            {% block app_content %}
+                <!-- application content -->
+            {% endblock%}
+    </div>
+   
+    {% endblock %}
+

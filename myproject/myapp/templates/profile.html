@@ -1,0 +1,63 @@
+{% extends 'base.html'%} {% block app_content %}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="col-sm-4">
+            <img src="/static/img/{{user.photo_url}}" class="img-responsive">
+        </div>
+        {% if user==current_user %}
+        <div>
+            <form action="{{url_for('upload')}}" method="POST" enctype=multipart/form-data>
+                <input type="file" name="photo" />
+                <br />
+                <button class="btn btn-primary btn-sm" type="submit">
+                    Kaydet
+                </button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-8">
+        <div class="row">
+            <div class="panel panel-info">
+                <div class="panel-heading">Hakkımda</div>
+                <div class="panel-body">
+                    {{user.about_me}}
+                </div>
+            </div>
+            {% if user==current_user %}
+            <button class="btn btn-default">
+                <a href="{{url_for('edit_about_me')}}">
+                    Hakkımda yazısı ekle</a>
+            </button>
+            {% endif %}
+        </div>
+        <div class="row" style="margin-top:10px; margin-bottom:10px;"></div>
+        <div class="row">
+            <div class="alert-warning">
+                <h4>Okuduğum kitaplarım</h4>
+            </div>
+            <div class="list-group">
+                {% if books %} {% for book in books %}
+                <div class="list-group-item">
+                    {% if user==current_user %}
+                    <a class="btn-sm btn-danger" href="{{ url_for('give_back', book_id = book.id)}}">
+                        Okudum</a>
+                        {%endif%}
+                    <b>{{book.title}}</b> | {{book.author}} |
+
+                </div>
+                {% endfor%} {% else %}
+                <div>
+                    <h3>Listene kitap eklemelisin!</h3>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock%}

@@ -1,0 +1,50 @@
+ {% extends 'base.html' %} {% block app_content %}
+<div class="row">
+    <h1 class="col-md-4 alert-info">Merhaba: {{current_user.username}}</h1>
+</div>
+<div class="row">
+    <div class="col-md-8 alert-success">
+        <h4>Kitap ödünç almak için seçip kaydedebilirsiniz.</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <form action="" method="POST">
+            <!-- CSRF TOKEN -->
+            {{ form.hidden_tag() }}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Kitabın Adı</th>
+                        <th>Kitabın Yazarı</th>
+                        <th>###</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if books%} 
+                    {% for book in books%}
+                        <tr>
+                            <td>
+                                <b>{{book.title}}</b>
+                            </td>
+                            <td>{{book.author}}</td>
+                            <td>
+                                <input type="checkbox" name='selected_books' value='{{book.id}}' />
+                            </td>
+                        </tr>
+                    {% endfor%} 
+                    {% else %}
+                    <tr>
+                        <td><h3>Boşta kalan kitap yok, ne güzel herkes okuyor (:</h3></td>
+                    </tr>
+                    {% endif%}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">
+                Listeme Ekle
+            </button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
